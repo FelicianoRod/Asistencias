@@ -1,3 +1,4 @@
+import 'package:app_asistencias/screens/ver_examen_screen.dart';
 import 'package:flutter/material.dart';
 
 class DetalleAlumnosScreen extends StatelessWidget {
@@ -52,7 +53,17 @@ class DetalleAlumnosScreen extends StatelessWidget {
               ),
               trailing: TextButton(
                 onPressed: () {
-                  // Aquí podrías navegar al detalle del examen del alumno
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const VerExamenScreen(
+                        alumno: 'Roldan Arcos Gomez',
+                        materia: 'Matemáticas',
+                        grupo: 'A',
+                        semestre: 1,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text('Ver Examen'),
               ),

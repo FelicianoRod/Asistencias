@@ -22,7 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => MainScreen(rol: rol)),
+        MaterialPageRoute(
+          builder: (_) => const MainScreen(
+            rol: 'docente',
+            nombre: 'Roldan Arcos Gonez', // 👈 ¡Esto es clave!
+          ),
+        ),
       );
     } else {
       Future.delayed(Duration.zero, () {

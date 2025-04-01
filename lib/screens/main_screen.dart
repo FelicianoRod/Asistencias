@@ -1,4 +1,5 @@
 import 'package:app_asistencias/screens/bienvenida_screen.dart';
+import 'package:app_asistencias/screens/ver_asistencias_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'materias_docente_screen.dart';
@@ -22,8 +23,8 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   final alumnoOptions = [
-    {'title': 'Inicio Alumno', 'icon': Icons.home},
-    {'title': 'Ver Asistencias', 'icon': Icons.visibility},
+    {'title': 'Inicio', 'icon': Icons.home},
+    {'title': 'Registra tu asistencia', 'icon': Icons.visibility},
   ];
 
   Widget _getContent() {
@@ -31,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
       if (currentIndex == 0) {
         return BienvenidaScreen(nombre: widget.nombre, rol: widget.rol);
       } else if (currentIndex == 1) {
-        return InicioDocenteScreen(nombreDocente: widget.nombre);
+        return MateriaDocenteScreen(nombreDocente: widget.nombre);
       } else {
         return Center(
           child: Text(
@@ -41,12 +42,20 @@ class _MainScreenState extends State<MainScreen> {
         );
       }
     } else {
-      return Center(
-        child: Text(
-          alumnoOptions[currentIndex]['title'] as String,
-          style: const TextStyle(fontSize: 20),
-        ),
-      );
+      if (currentIndex == 0) {
+        return BienvenidaScreen(
+            nombre: widget.nombre, rol: widget.rol); // 👈 Igual que el docente
+      }
+      if (currentIndex == 1) {
+        return VerAsistenciasScreen(); // 👈 esta es la pantalla del código
+      } else {
+        return Center(
+          child: Text(
+            alumnoOptions[currentIndex]['title'] as String,
+            style: const TextStyle(fontSize: 20),
+          ),
+        );
+      }
     }
   }
 

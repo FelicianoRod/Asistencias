@@ -23,9 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const MainScreen(
-            rol: 'docente',
-            nombre: 'Roldan Arcos Gonez', // 👈 ¡Esto es clave!
+          builder: (_) => MainScreen(
+            rol: rol,
+            nombre: email, // o usa el nombre real si lo tienes
           ),
         ),
       );

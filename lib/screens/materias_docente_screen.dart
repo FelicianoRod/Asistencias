@@ -1,10 +1,10 @@
 import 'package:app_asistencias/screens/detalle_alumnos_screen.dart';
 import 'package:flutter/material.dart';
 
-class InicioDocenteScreen extends StatelessWidget {
+class MateriaDocenteScreen extends StatelessWidget {
   final String nombreDocente;
 
-  const InicioDocenteScreen({super.key, required this.nombreDocente});
+  const MateriaDocenteScreen({super.key, required this.nombreDocente});
 
   @override
   Widget build(BuildContext context) {

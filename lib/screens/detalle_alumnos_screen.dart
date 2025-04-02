@@ -1,11 +1,51 @@
-import 'package:app_asistencias/screens/ver_examen_screen.dart';
 import 'package:flutter/material.dart';
+import 'ver_examen_screen.dart';
+
+class AlumnoExamen {
+  final String nombre;
+  final String materia;
+  final String grupo;
+  final int semestre;
+  final int aciertos;
+
+  AlumnoExamen({
+    required this.nombre,
+    required this.materia,
+    required this.grupo,
+    required this.semestre,
+    required this.aciertos,
+  });
+}
 
 class DetalleAlumnosScreen extends StatelessWidget {
   const DetalleAlumnosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<AlumnoExamen> alumnos = [
+      AlumnoExamen(
+        nombre: 'Roldan Arcos Gomez',
+        materia: 'Matemáticas',
+        grupo: 'A',
+        semestre: 1,
+        aciertos: 2,
+      ),
+      AlumnoExamen(
+        nombre: 'Luis Pérez Castillo',
+        materia: 'Matemáticas',
+        grupo: 'A',
+        semestre: 1,
+        aciertos: 4,
+      ),
+      AlumnoExamen(
+        nombre: 'Ana López Ramírez',
+        materia: 'Matemáticas',
+        grupo: 'A',
+        semestre: 1,
+        aciertos: 3,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F4FC),
       appBar: AppBar(
@@ -20,10 +60,13 @@ class DetalleAlumnosScreen extends StatelessWidget {
           style: TextStyle(color: Colors.black87),
         ),
       ),
-      body: ListView(
+      body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        children: [
-          Container(
+        itemCount: alumnos.length,
+        itemBuilder: (context, index) {
+          final alumno = alumnos[index];
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -40,15 +83,15 @@ class DetalleAlumnosScreen extends StatelessWidget {
                 backgroundColor: Colors.blueAccent,
                 child: Icon(Icons.person, color: Colors.white),
               ),
-              title: const Text(
-                'Roldan Arcos Gomez',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              title: Text(
+                alumno.nombre,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Row(
-                children: const [
-                  Icon(Icons.star, size: 16, color: Colors.amber),
-                  SizedBox(width: 4),
-                  Text('Aciertos: 2'),
+                children: [
+                  const Icon(Icons.star, size: 16, color: Colors.amber),
+                  const SizedBox(width: 4),
+                  Text('Aciertos: ${alumno.aciertos}'),
                 ],
               ),
               trailing: TextButton(
@@ -56,11 +99,11 @@ class DetalleAlumnosScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const VerExamenScreen(
-                        alumno: 'Roldan Arcos Gomez',
-                        materia: 'Matemáticas',
-                        grupo: 'A',
-                        semestre: 1,
+                      builder: (_) => VerExamenScreen(
+                        alumno: alumno.nombre,
+                        materia: alumno.materia,
+                        grupo: alumno.grupo,
+                        semestre: alumno.semestre,
                       ),
                     ),
                   );
@@ -68,8 +111,8 @@ class DetalleAlumnosScreen extends StatelessWidget {
                 child: const Text('Ver Examen'),
               ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

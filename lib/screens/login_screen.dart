@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
+import '../models/usuario_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,27 +18,41 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
 
-    if (email.isNotEmpty && password.isNotEmpty) {
-      String rol = email.contains('docente') ? 'docente' : 'alumno';
+    if (email == 'docente1@cobach.mx' && password == '1234') {
+      final usuario = Usuario(
+        correo: email,
+        contrasena: password,
+        nombre: 'Roldan Arcos Gonez',
+        rol: 'docente',
+      );
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => MainScreen(
-            rol: rol,
-            nombre: email, // o usa el nombre real si lo tienes
-          ),
+          builder: (_) => MainScreen(usuario: usuario),
+        ),
+      );
+    } else if (email == 'alumno1@cobach.mx' && password == '1234') {
+      final usuario = Usuario(
+        correo: email,
+        contrasena: password,
+        nombre: 'Luis Pérez Castillo',
+        rol: 'alumno',
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MainScreen(usuario: usuario),
         ),
       );
     } else {
-      Future.delayed(Duration.zero, () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Por favor llena todos los campos'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Credenciales incorrectas'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
     }
   }
 
@@ -123,7 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: const Text(
                       'INGRESAR',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

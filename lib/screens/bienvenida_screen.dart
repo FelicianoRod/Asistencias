@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import '../models/usuario_model.dart';
 
 class BienvenidaScreen extends StatelessWidget {
-  final String nombre;
-  final String rol;
+  final Usuario usuario;
 
   const BienvenidaScreen({
     super.key,
-    required this.nombre,
-    required this.rol,
+    required this.usuario,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool esDocente = rol.toLowerCase() == 'docente';
+    final bool esDocente = usuario.rol.toLowerCase() == 'docente';
 
     return Center(
       child: Padding(
@@ -27,7 +26,7 @@ class BienvenidaScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              '¡Bienvenid@, $nombre!',
+              '¡Bienvenid@, ${usuario.nombre}!',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -37,7 +36,7 @@ class BienvenidaScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              esDocente ? 'Docente' : ' Alumno',
+              esDocente ? 'Docente' : 'Alumno',
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.black54,

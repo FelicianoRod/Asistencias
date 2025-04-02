@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/pregunta_examen_model.dart';
 
 class VerExamenScreen extends StatelessWidget {
   final String alumno;
@@ -16,32 +17,29 @@ class VerExamenScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> preguntas = [
-      {
-        'pregunta': '¿Cuánto es 2 + 2?',
-        'respuestas': ['3', '4', '5', '6'],
-        'respuestaCorrecta': '4',
-        'respuestaAlumno': '4',
-      },
-      {
-        'pregunta': '¿Cuál es la capital de Francia?',
-        'respuestas': ['Madrid', 'Berlín', 'París', 'Roma'],
-        'respuestaCorrecta': 'París',
-        'respuestaAlumno': 'Madrid',
-      },
-      {
-        'pregunta': '¿Qué planeta es conocido como el planeta rojo?',
-        'respuestas': ['Marte', 'Venus', 'Júpiter', 'Saturno'],
-        'respuestaCorrecta': 'Marte',
-        'respuestaAlumno': 'Marte',
-      },
+    final List<PreguntaExamen> preguntas = [
+      PreguntaExamen(
+        pregunta: '¿Cuánto es 2 + 2?',
+        respuestas: ['3', '4', '5', '6'],
+        respuestaCorrecta: '4',
+        respuestaAlumno: '4',
+      ),
+      PreguntaExamen(
+        pregunta: '¿Cuál es la capital de Francia?',
+        respuestas: ['Madrid', 'Berlín', 'París', 'Roma'],
+        respuestaCorrecta: 'París',
+        respuestaAlumno: 'Madrid',
+      ),
+      PreguntaExamen(
+        pregunta: '¿Qué planeta es conocido como el planeta rojo?',
+        respuestas: ['Marte', 'Venus', 'Júpiter', 'Saturno'],
+        respuestaCorrecta: 'Marte',
+        respuestaAlumno: 'Marte',
+      ),
     ];
 
-    // Contadores de aciertos y errores
-    int aciertos = preguntas
-        .where((p) => p['respuestaAlumno'] == p['respuestaCorrecta'])
-        .length;
-    int errores = preguntas.length - aciertos;
+    final int aciertos = preguntas.where((p) => p.esCorrecta).length;
+    final int errores = preguntas.length - aciertos;
 
     return Scaffold(
       appBar: AppBar(
@@ -65,6 +63,7 @@ class VerExamenScreen extends StatelessWidget {
           ...preguntas.asMap().entries.map((entry) {
             final index = entry.key + 1;
             final pregunta = entry.value;
+
             return Card(
               margin: const EdgeInsets.only(bottom: 16),
               child: Padding(
@@ -73,17 +72,15 @@ class VerExamenScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Pregunta $index: ${pregunta['pregunta']}',
+                      'Pregunta $index: ${pregunta.pregunta}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    ...pregunta['respuestas'].map<Widget>((opcion) {
-                      final esSeleccionada =
-                          opcion == pregunta['respuestaAlumno'];
-                      final esCorrecta =
-                          opcion == pregunta['respuestaCorrecta'];
-                      Icon? icono;
+                    ...pregunta.respuestas.map((opcion) {
+                      final esSeleccionada = opcion == pregunta.respuestaAlumno;
+                      final esCorrecta = opcion == pregunta.respuestaCorrecta;
 
+                      Icon? icono;
                       if (esSeleccionada && esCorrecta) {
                         icono =
                             const Icon(Icons.check_circle, color: Colors.green);

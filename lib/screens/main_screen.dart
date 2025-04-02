@@ -1,3 +1,4 @@
+import 'package:app_asistencias/models/usuario_model.dart';
 import 'package:app_asistencias/screens/bienvenida_screen.dart';
 import 'package:app_asistencias/screens/ver_asistencias_screen.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +6,9 @@ import 'login_screen.dart';
 import 'materias_docente_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  final String rol;
-  final String nombre;
+  final Usuario usuario;
 
-  const MainScreen({super.key, required this.rol, required this.nombre});
+  const MainScreen({super.key, required this.usuario});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -28,11 +28,13 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   Widget _getContent() {
-    if (widget.rol == 'docente') {
+    final esDocente = widget.usuario.rol == 'docente';
+
+    if (esDocente) {
       if (currentIndex == 0) {
-        return BienvenidaScreen(nombre: widget.nombre, rol: widget.rol);
+        return BienvenidaScreen(usuario: widget.usuario);
       } else if (currentIndex == 1) {
-        return MateriaDocenteScreen(nombreDocente: widget.nombre);
+        return MateriaDocenteScreen(nombreDocente: widget.usuario.nombre);
       } else {
         return Center(
           child: Text(
@@ -43,11 +45,9 @@ class _MainScreenState extends State<MainScreen> {
       }
     } else {
       if (currentIndex == 0) {
-        return BienvenidaScreen(
-            nombre: widget.nombre, rol: widget.rol); // 👈 Igual que el docente
-      }
-      if (currentIndex == 1) {
-        return VerAsistenciasScreen(); // 👈 esta es la pantalla del código
+        return BienvenidaScreen(usuario: widget.usuario);
+      } else if (currentIndex == 1) {
+        return VerAsistenciasScreen();
       } else {
         return Center(
           child: Text(
@@ -61,8 +61,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDocente = widget.rol == 'docente';
-    final menuOptions = isDocente ? docenteOptions : alumnoOptions;
+    final esDocente = widget.usuario.rol == 'docente';
+    final menuOptions = esDocente ? docenteOptions : alumnoOptions;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: isDocente ? Colors.deepPurple : Colors.blue,
+                color: esDocente ? Colors.deepPurple : Colors.blue,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    widget.nombre,
+                    widget.usuario.nombre,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   Text(
-                    isDocente ? 'Docente' : 'Alumno',
+                    esDocente ? 'Docente' : 'Alumno',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,

@@ -1,3 +1,4 @@
+import 'package:app_asistencias/viewmodel/controller/authentication_controller.dart';
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 import '../models/usuario_model.dart';
@@ -13,6 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
+  AuthenticationController authenticationController =
+      AuthenticationController();
 
   void _login() {
     final email = emailController.text.trim();
@@ -128,7 +131,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: _login,
+                    onPressed: () {
+                      authenticationController.login(
+                        context,
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF880000),
                       shape: RoundedRectangleBorder(

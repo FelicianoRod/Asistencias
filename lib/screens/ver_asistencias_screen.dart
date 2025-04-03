@@ -1,3 +1,4 @@
+import 'package:app_asistencias/viewmodel/controller/student_controller.dart';
 import 'package:flutter/material.dart';
 
 class VerAsistenciasScreen extends StatefulWidget {
@@ -9,11 +10,13 @@ class VerAsistenciasScreen extends StatefulWidget {
 
 class _VerAsistenciasScreenState extends State<VerAsistenciasScreen> {
   final TextEditingController codigoController = TextEditingController();
+  StudentController studentController = StudentController();
 
-  void _acceder() {
+   _acceder(BuildContext context) {
     final codigo = codigoController.text.trim();
     if (codigo.isNotEmpty) {
       // Aquí puedes navegar o validar el código
+      studentController.insertCode(context, codigo);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Código ingresado: $codigo')),
       );
@@ -25,6 +28,14 @@ class _VerAsistenciasScreenState extends State<VerAsistenciasScreen> {
         ),
       );
     }
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Por favor ingrese el código'),
+    //       backgroundColor: Colors.redAccent,
+    //     ),
+    //   );
+    // }
   }
 
   @override
@@ -59,7 +70,9 @@ class _VerAsistenciasScreenState extends State<VerAsistenciasScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _acceder,
+                onPressed: () {
+                  _acceder(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding: const EdgeInsets.symmetric(vertical: 14),

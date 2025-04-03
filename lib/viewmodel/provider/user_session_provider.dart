@@ -6,6 +6,8 @@ class UserSessionProvider  with ChangeNotifier {
 
   UserSession? get getUserSession => userSession;
 
+  // int? get getUserId => userSession;
+
   Future<void> setUserSession({required UserSession userSession}) async {
     this.userSession = userSession;
     notifyListeners;

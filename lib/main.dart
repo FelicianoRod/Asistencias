@@ -1,10 +1,14 @@
+import 'package:app_asistencias/services/notifications_service.dart';
 import 'package:app_asistencias/viewmodel/provider/exams_provider.dart';
 import 'package:app_asistencias/viewmodel/provider/user_session_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initNotifications();
+
   runApp(
     MultiProvider(
       providers: [

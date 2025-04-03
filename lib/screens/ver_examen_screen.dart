@@ -99,6 +99,9 @@ class VerExamenScreen extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 12),
+                        // ...pregunta.respuestas.map((opcion) {
+                        //   final esSeleccionada = opcion == pregunta.respuestaAlumno;
+                        //   final esCorrecta = opcion == pregunta.respuestaCorrecta;
                         ...pregunta.respuestas.map((opcion) {
                           final esSeleccionada = opcion == pregunta.respuestaAlumno;
                           final esCorrecta = opcion == pregunta.respuestaCorrecta;

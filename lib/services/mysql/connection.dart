@@ -3,7 +3,7 @@ import 'package:mysql1/mysql1.dart';
 class Connection {
   static String host = 'codew4ves.com',
       user = 'u732277365_root',
-      password = 'Coba2005',
+      password = 'Cobach2005',
       db = 'u732277365_coba';
   static int port = 3306;
 
